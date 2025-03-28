@@ -39,5 +39,6 @@ func SetupRoutes(e *echo.Echo) {
 
 	// ================================================================
 	e.GET("/classes/:lecturer_id", controllers.GetClassesByLecturer)
-
+	e.GET("/attendance-summary", controllers.AttendanceSummaryHandler)
+	e.GET("/attendance-detail", controllers.GetAttendanceDetails)
 }
