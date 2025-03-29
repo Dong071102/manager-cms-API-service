@@ -118,10 +118,12 @@ func GetAttendanceDetails(c echo.Context) error {
 	classID := c.QueryParam("class_id")
 	// Định nghĩa cấu trúc dữ liệu cho bản ghi trả về
 	var records []struct {
+		AttendanceId   uuid.UUID `json:"attendance_id"`
 		StudentID      uuid.UUID `json:"student_id"`
 		StudentCode    string    `json:"student_code"`
 		FirstName      string    `json:"first_name"`
 		LastName       string    `json:"last_name"`
+		ScheduleId     uuid.UUID `json:"Schedule_id"`
 		ClassID        uuid.UUID `json:"class_id"`
 		ClassName      string    `json:"class_name"`
 		CourseID       uuid.UUID `json:"course_id"`
@@ -134,7 +136,7 @@ func GetAttendanceDetails(c echo.Context) error {
 
 	// Xây dựng query cơ bản với điều kiện lecturer_id
 	dbQuery := config.DB.Table("attendance a").
-		Select(`a.student_id, st.student_code, u.first_name, u.last_name,
+		Select(`a.attendance_id,a.student_id, st.student_code, u.first_name, u.last_name,a.schedule_id,
 		        c.class_id, c.class_name, cs.course_id, cs.course_name,
 		        a.status, a.attendance_time, s.start_time, a.note`).
 		Joins("JOIN schedules s ON a.schedule_id = s.schedule_id").
