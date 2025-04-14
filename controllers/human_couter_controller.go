@@ -97,7 +97,7 @@ func GetSnapshotDetails(c echo.Context) error {
 		params["class_id"] = classID
 	}
 
-	baseQuery += " ORDER BY s.start_time"
+	baseQuery += " ORDER BY s.start_time DESC, p.captured_at DESC"
 
 	var results []SnapshotResponse
 	if err := config.DB.Raw(baseQuery, params).Scan(&results).Error; err != nil {
